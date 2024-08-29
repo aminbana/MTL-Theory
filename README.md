@@ -1,4 +1,3 @@
-<br><br><br>
 # Theoretical Insights into Overparameterized Models in Multi-Task and Replay-Based Continual Learning 
 
 In this repository we provide PyTorch implementations for our paper. The directory outline is as follows:

@@ -40,11 +40,20 @@ For easier reproducibility, we provided scripts to replicate the experiments of 
 - Replay-based Continual learning with different amounts of memory size (Figure 6):  ```exp4_cl.py```
 - Computing the average across-task inner product of the task-optimal weights (Figure 4):  ```exp2_layers.py```
 - Continual learning with fixed memory constraints (Table 1):  ```exp5_mem.py```
+- Simulation of toy datasets matching the theoratical results (Figure 1):  ```theory.ipynb```
 
 Simply run them as follows:
 
 ```bash
 python exp1_multi.py
 ```
+
+<!-- # Citation
+
+If you found our work helpful, cite us as
+
+
+Mention the ```main.ipynb``` -->
+
 
 

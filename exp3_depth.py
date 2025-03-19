@@ -179,6 +179,6 @@ for i in range(1):
 
 
 plot_name = args.save
-plt.savefig(f'Figs/Appendix/exp3_depth_{args.scenario}.png', bbox_inches='tight', dpi=300)
+plt.savefig(f'Figs/Appendix/exp3_depth_{args.scenario}.pdf', bbox_inches='tight', dpi=300)
 plt.show()
-print('saved' + f'{plot_name}_multi_vs_single.png')
+print('saved' + f'{plot_name}_multi_vs_single.pdf')

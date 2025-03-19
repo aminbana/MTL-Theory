@@ -139,13 +139,15 @@ adjust_plots()
 
 widths = np.array(widths)
 if use_pretrained_backbone:
+    widths_ = np.array([1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384][::2])
     widths = np.log2(widths)
-    x_label = r'$\log_2 (k)$'
-    x_ticks = np.log2(widths_)
+    x_label = r'$k$'
+    x_ticks = np.log2(np.array([1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384][::2]))
 else:
     widths = np.log10(widths)
-    x_label = r'$\log_{10} (k)$'
-    x_ticks = [0, 0.5, 1, 1.5, 2,]
+    x_label = r'$k$'
+    widths_ = np.array([1, 5, 10, 50, 100])
+    x_ticks = np.log10(widths_)
 
 
 plot_name = f'{args.scenario}_{"pretrained" if use_pretrained_backbone else ""}'
@@ -170,7 +172,7 @@ for i in range(len(mems)):
         plt.legend()
 
 plt.grid()
-# plt.savefig(f'Figs/Experiments/exp4_train_loss_{plot_name}.png', bbox_inches='tight', dpi = 300)
+# plt.savefig(f'Figs/Experiments/exp4_train_loss_{plot_name}.pdf', bbox_inches='tight', dpi = 300)
 plt.show()
 plt.clf()
 
@@ -192,12 +194,12 @@ for i in range(len(mems)):
 
         plt.xlabel(x_label)
         plt.ylabel('Test Loss')
-        plt.xticks(x_ticks)
+        plt.xticks(x_ticks, widths_)
         if use_pretrained_backbone:
             plt.legend()
         
 plt.grid()
-plt.savefig(f'Figs/Experiments/exp4_test_loss_{plot_name}.png', bbox_inches='tight', dpi = 300)
+plt.savefig(f'Figs/Experiments/exp4_test_loss_{plot_name}.pdf', bbox_inches='tight', dpi = 300)
 plt.show()
 plt.clf()
 
@@ -219,11 +221,11 @@ for i in range(len(mems)):
         plt.xlabel(x_label)
         plt.ylabel('Forgetting')
         # plt.legend()
-        plt.xticks(x_ticks)
+        plt.xticks(x_ticks, widths_)
 
 
 plt.grid()
-plt.savefig(f'Figs/Experiments/exp4_forgetting_{plot_name}.png', bbox_inches='tight', dpi = 300)
+plt.savefig(f'Figs/Experiments/exp4_forgetting_{plot_name}.pdf', bbox_inches='tight', dpi = 300)
 plt.show()
 plt.clf()
 
@@ -253,24 +255,28 @@ for i in range(len(mems)):
         axs[0].set_ylabel('Last Task Train Error')
         axs[0].legend()
         axs[0].set_xticks(x_ticks)
+        axs[0].set_xticklabels(widths_)
 
         axs[2].plot(widths, 100 - test_accs[:, i], '.-', label=f'{label}', color=color)
         axs[2].set_xlabel(x_label)
         axs[2].set_ylabel('Test Error')
         axs[2].set_xticks(x_ticks)
+        axs[2].set_xticklabels(widths_)
         
 
         axs[1].plot(widths, forgetting[:, i], '.-', label=f'{label}', color=color)
         axs[1].set_xlabel(x_label)
         axs[1].set_ylabel('Forgetting')
         axs[1].set_xticks(x_ticks)
+        axs[1].set_xticklabels(widths_)
 
         axs[3].plot(widths, test_losses[:, i], '.-', label=f'{label}', color=color)
         axs[3].set_xlabel(x_label)
         axs[3].set_ylabel('Test Loss')
         axs[3].set_xticks(x_ticks)
+        axs[3].set_xticklabels(widths_)
 
-plt.savefig(f'Figs/Appendix/exp4_{plot_name}.png', bbox_inches='tight', dpi=300)
+plt.savefig(f'Figs/Appendix/exp4_{plot_name}.pdf', bbox_inches='tight', dpi=300)
 plt.show()
 
 

@@ -190,13 +190,15 @@ if True:
 
 widths = np.array(widths)
 if use_pretrained_backbone:
+    widths_ = widths[::2]
     widths = np.log2(widths)
-    x_label = r'$\log_2 (k)$'
-    x_ticks = widths
+    x_label = r'$k$'
+    x_ticks = widths[::2]
 else:
     widths = np.log10(widths)
-    x_label = r'$\log_{10} (k)$'
-    x_ticks = [0, 0.5, 1, 1.5, 2,]
+    x_label = r'$k$'
+    widths_ = np.array([1, 5, 10, 50, 100])
+    x_ticks = np.log10(widths_)
     
 
 plt_name = f'{args.dataset}_{args.backbone}_{args.scenario}_{"pretrained" if use_pretrained_backbone else ""}'
@@ -213,7 +215,8 @@ for i in range(2):
 
         plt.plot(widths, train_losses[:, i, n], '.-', label=f'{label}', color=color)
         plt.xlabel(x_label)
-        plt.xticks(x_ticks)
+        plt.xticks(x_ticks, widths_)
+        
         plt.ylabel('Train Loss')
         
         # if ylim_loss_train is not None:
@@ -223,11 +226,18 @@ for i in range(2):
             plt.legend()
 
 plt.grid()
-plt.savefig(f'Figs/Experiments/exp1_train_loss_{plt_name}', bbox_inches='tight', dpi=300)
+plt.savefig(f'Figs/Experiments/exp1_train_loss_{plt_name}.pdf', bbox_inches='tight', dpi=300)
 plt.show()
 plt.clf()
 
 ####################################################################################################################################################################################################################################################################
+
+#print rcParams["figure.figsize"] to check the default figure size
+print(plt.rcParams["figure.figsize"])
+
+if args.dataset == 'CIFAR100' and not use_pretrained_backbone:
+    plt_size = (6.4, 4.1)
+    plt.figure(figsize=plt_size)
 
 t = -1
 for i in range(2):
@@ -240,7 +250,7 @@ for i in range(2):
         plt.plot(widths, test_losses[:, i, n], '.-', label=f'{label}', color=color)
         plt.xlabel(x_label)
         plt.ylabel('Test Loss')
-        plt.xticks(x_ticks)
+        plt.xticks(x_ticks, widths_)
         
         # if ylim_loss_test is not None:
         #     plt.ylim(ylim_loss_test)
@@ -249,7 +259,7 @@ for i in range(2):
         
 
 plt.grid()
-plt.savefig(f'Figs/Experiments/exp1_test_loss_{plt_name}', bbox_inches='tight', dpi=300)
+plt.savefig(f'Figs/Experiments/exp1_test_loss_{plt_name}.pdf', bbox_inches='tight', dpi=300)
 plt.show()
 plt.clf()
 
@@ -280,6 +290,8 @@ for i in range(2):
         axs[0].set_ylabel('Train Error')
         axs[0].legend()
         axs[0].set_xticks(x_ticks)
+        axs[0].set_xticklabels(widths_)
+        
         if ylim_err_train is not None:
             axs[0].set_ylim(ylim_err_train)
 
@@ -288,6 +300,8 @@ for i in range(2):
         axs[2].set_xlabel(x_label)
         axs[2].set_ylabel('Test Error')
         axs[2].set_xticks(x_ticks)
+        axs[2].set_xticklabels(widths_)
+        
         if ylim_err_test is not None:
             axs[2].set_ylim(ylim_err_test)
 
@@ -296,17 +310,21 @@ for i in range(2):
         axs[1].set_xlabel(x_label)
         axs[1].set_ylabel('Train Loss')
         axs[1].set_xticks(x_ticks)
+        axs[1].set_xticklabels(widths_)
+        
         if ylim_loss_train is not None:
             axs[1].set_ylim(ylim_loss_train)
 
 
         axs[3].plot(widths, test_losses[:, i, n], '.-', label=f'{label}', color=color)
         axs[3].set_xlabel(x_label)
-        axs[3].set_ylabel('Test Loss')
         axs[3].set_xticks(x_ticks)
+        axs[3].set_xticklabels(widths_)
+        
         if ylim_loss_test is not None:
             axs[3].set_ylim(ylim_loss_test)
 
 
-plt.savefig(f'Figs/Appendix/exp1_{plt_name}.png', bbox_inches='tight', dpi=300)
+plt.savefig(f'Figs/Appendix/exp1_{plt_name}.pdf', bbox_inches='tight', dpi=300)
+plt.show()
 plt.clf()

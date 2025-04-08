@@ -54,5 +54,16 @@ If you found our work helpful, cite us as
 
 Mention the ```main.ipynb``` -->
 
+# Citation
+If you liked our work, please cite us as:
 
+```
+@article{
+banayeeanzade2025theoretical,
+title={Theoretical Insights into Overparameterized Models in Multi-Task and Replay-Based Continual Learning},
+author={Mohammadamin Banayeeanzade and Mahdi Soltanolkotabi and Mohammad Rostami},
+journal={Transactions on Machine Learning Research},
+year={2025},
+}
+```
 
